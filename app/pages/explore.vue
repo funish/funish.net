@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import simpleIcons from "@iconify-json/simple-icons/icons.json";
+import type { UnifiedSearchResult } from "~/composables/useSearch";
 
 const { t } = useI18n();
 const { search } = useSearch();
@@ -10,32 +10,54 @@ const { data: npmTrending, pending: npmPending } = await useAsyncData(
   { lazy: true },
 );
 
-// Random brand names from simple-icons as Winget search keywords
-const allBrandNames = Object.keys((simpleIcons as any).icons).filter(
-  (n) => /^[a-z]/.test(n) && n.length > 3 && n.length < 20,
-);
+const wingetKeywords = [
+  "Google",
+  "Microsoft",
+  "Apple",
+  "Amazon",
+  "Meta",
+  "Nvidia",
+  "Intel",
+  "Adobe",
+  "Oracle",
+  "Tencent",
+  "Alibaba",
+  "ByteDance",
+  "Huawei",
+  "Samsung",
+  "Spotify",
+  "Telegram",
+  "Discord",
+  "Slack",
+  "Zoom",
+  "VLC",
+  "Docker",
+  "Cloudflare",
+  "Vercel",
+  "TailwindCSS",
+  "NodeJS",
+  "Python",
+  "Git",
+  "7-Zip",
+  "Sublime Text",
+  "Epic Games",
+];
 
 const { data: wingetPopular, pending: wingetPending } = await useAsyncData(
   "explore-winget",
   async () => {
+    const responses = await Promise.all(
+      wingetKeywords.map((kw) => search({ query: kw, source: "winget", size: 5 })),
+    );
+
     const seen = new Set<string>();
     const results: UnifiedSearchResult[] = [];
 
-    const shuffled = [...allBrandNames].sort(() => Math.random() - 0.5);
-    const batchSize = 2;
-
-    for (let i = 0; i < shuffled.length && results.length < 30; i += batchSize) {
-      const batch = shuffled.slice(i, i + batchSize);
-      const responses = await Promise.all(
-        batch.map((kw) => search({ query: kw, source: "winget", size: 3 })),
-      );
-
-      for (const res of responses) {
-        for (const item of res.results) {
-          if (!seen.has(item.name) && results.length < 30) {
-            seen.add(item.name);
-            results.push(item);
-          }
+    for (const res of responses) {
+      for (const item of res.results) {
+        if (!seen.has(item.name) && results.length < 30) {
+          seen.add(item.name);
+          results.push(item);
         }
       }
     }

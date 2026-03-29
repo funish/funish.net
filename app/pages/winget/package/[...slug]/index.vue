@@ -31,7 +31,7 @@ const { t } = useI18n();
         <h3 class="font-semibold">{{ t("package.author") }}</h3>
         <div class="text-muted space-y-1 text-sm">
           <p v-if="locale.Publisher">
-            {{ t("package.publisher") || locale.Publisher }}:
+            {{ t("package.publisher") }}:
             <span class="text-default">{{ locale.Publisher }}</span>
           </p>
           <p v-if="locale.Author && locale.Author !== locale.Publisher">
@@ -87,7 +87,7 @@ const { t } = useI18n();
 
       <!-- Tags -->
       <div v-if="locale.Tags?.length">
-        <h3 class="mb-2 font-semibold">Tags</h3>
+        <h3 class="mb-2 font-semibold">{{ t("package.keywords") }}</h3>
         <div class="flex flex-wrap gap-1">
           <UBadge
             v-for="tag in locale.Tags"
@@ -101,13 +101,13 @@ const { t } = useI18n();
 
       <!-- Release notes -->
       <div v-if="locale.ReleaseNotes">
-        <h3 class="mb-2 font-semibold">Release Notes</h3>
+        <h3 class="mb-2 font-semibold">{{ t("package.releaseNotes") }}</h3>
         <p class="text-muted whitespace-pre-wrap">{{ locale.ReleaseNotes }}</p>
       </div>
 
       <!-- Documentation links -->
       <div v-if="locale.Documentations?.length">
-        <h3 class="mb-2 font-semibold">Documentation</h3>
+        <h3 class="mb-2 font-semibold">{{ t("package.documentation") }}</h3>
         <div class="space-y-1">
           <UButton
             v-for="doc in locale.Documentations"
@@ -122,7 +122,7 @@ const { t } = useI18n();
 
       <!-- Installation notes -->
       <div v-if="locale.InstallationNotes">
-        <h3 class="mb-2 font-semibold">Installation Notes</h3>
+        <h3 class="mb-2 font-semibold">{{ t("package.installationNotes") }}</h3>
         <p class="text-muted whitespace-pre-wrap">{{ locale.InstallationNotes }}</p>
       </div>
     </div>

@@ -75,7 +75,10 @@
     "filePreview": "Preview",
     "binaryFile": "Binary file, cannot be displayed",
     "fetchFileError": "Failed to load file content",
-    "selectFile": "Select a file to preview"
+    "selectFile": "Select a file to preview",
+    "releaseNotes": "Release Notes",
+    "documentation": "Documentation",
+    "installationNotes": "Installation Notes"
   },
   "user": {
     "packages": "Packages",
