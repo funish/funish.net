@@ -2,7 +2,8 @@
   "nav": {
     "home": "Home",
     "explore": "Explore",
-    "search": "Search"
+    "search": "Search",
+    "switchLocale": "Switch language"
   },
   "search": {
     "placeholder": "Search packages...",

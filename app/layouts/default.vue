@@ -1,22 +1,17 @@
 <script setup lang="ts">
-import type { Locale } from "@nuxt/ui";
-import { en, zh_cn } from "@nuxt/ui/locale";
-const { t, setLocale } = useI18n();
+const { t, setLocale, locale: i18nLocale } = useI18n();
 
 const navItems = computed(() => [
   { label: t("nav.home"), to: "/" },
   { label: t("nav.explore"), to: "/explore" },
 ]);
 
+function toggleLocale() {
+  setLocale(i18nLocale.value === "en" ? "zh_cn" : "en");
+}
+
 const footerItems = computed(() => [
   { label: "Nexus", to: "https://nexus.funish.net", target: "_blank" },
-]);
-
-const locale = ref("en");
-
-const locales = ref<Locale<any>[]>([
-  { code: "en", name: "English", dir: "ltr", messages: en },
-  { code: "zh_cn", name: "简体中文", dir: "ltr", messages: zh_cn },
 ]);
 </script>
 
@@ -36,10 +31,11 @@ const locales = ref<Locale<any>[]>([
           :aria-label="t('nav.search')"
           to="/search"
         />
-        <ULocaleSelect
-          v-model="locale"
-          :locales="locales"
-          @update:model-value="setLocale($event as 'en' | 'zh_cn')"
+        <UButton
+          icon="i-lucide-languages"
+          variant="ghost"
+          :aria-label="t('nav.switchLocale')"
+          @click="toggleLocale"
         />
         <UColorModeButton />
       </template>

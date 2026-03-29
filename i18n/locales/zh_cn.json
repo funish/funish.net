@@ -2,7 +2,8 @@
   "nav": {
     "home": "首页",
     "explore": "探索",
-    "search": "搜索"
+    "search": "搜索",
+    "switchLocale": "切换语言"
   },
   "search": {
     "placeholder": "搜索包...",
