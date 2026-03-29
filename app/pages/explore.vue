@@ -7,10 +7,15 @@ const { search } = useSearch();
 const { data: npmTrending, pending: npmPending } = await useAsyncData(
   "explore-npm",
   () => search({ query: "popularity:>0.5", source: "npm", size: 30, sort: "popularity" }),
-  { lazy: true },
+  {
+    lazy: true,
+    getCachedData(key, nuxtApp) {
+      return nuxtApp.payload.data[key];
+    },
+  },
 );
 
-const wingetKeywords = [
+const allKeywords = [
   "Google",
   "Microsoft",
   "Apple",
@@ -43,8 +48,15 @@ const wingetKeywords = [
   "Epic Games",
 ];
 
+// Rotate 12 keywords every 30 minutes deterministically
+const slot = Math.floor(Date.now() / 1800000);
+const wingetKeywords = Array.from(
+  { length: 12 },
+  (_, i) => allKeywords[(slot * 7 + i) % allKeywords.length]!,
+);
+
 const { data: wingetPopular, pending: wingetPending } = await useAsyncData(
-  "explore-winget",
+  `explore-winget-${slot}`,
   async () => {
     const responses = await Promise.all(
       wingetKeywords.map((kw) => search({ query: kw, source: "winget", size: 5 })),
@@ -62,7 +74,9 @@ const { data: wingetPopular, pending: wingetPending } = await useAsyncData(
       }
     }
 
-    return { results, total: results.length };
+    // Round down to nearest multiple of 6
+    const count = Math.floor(results.length / 6) * 6;
+    return { results: results.slice(0, count), total: count };
   },
   { lazy: true },
 );

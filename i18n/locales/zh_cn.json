@@ -76,6 +76,7 @@
     "binaryFile": "二进制文件，无法显示",
     "fetchFileError": "加载文件内容失败",
     "selectFile": "选择一个文件以预览",
+    "tags": "标签",
     "releaseNotes": "发布说明",
     "documentation": "文档",
     "installationNotes": "安装说明"

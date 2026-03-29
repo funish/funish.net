@@ -76,6 +76,7 @@
     "binaryFile": "Binary file, cannot be displayed",
     "fetchFileError": "Failed to load file content",
     "selectFile": "Select a file to preview",
+    "tags": "Tags",
     "releaseNotes": "Release Notes",
     "documentation": "Documentation",
     "installationNotes": "Installation Notes"

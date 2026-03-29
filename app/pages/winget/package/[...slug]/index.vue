@@ -87,7 +87,7 @@ const { t } = useI18n();
 
       <!-- Tags -->
       <div v-if="locale.Tags?.length">
-        <h3 class="mb-2 font-semibold">{{ t("package.keywords") }}</h3>
+        <h3 class="mb-2 font-semibold">{{ t("package.tags") }}</h3>
         <div class="flex flex-wrap gap-1">
           <UBadge
             v-for="tag in locale.Tags"
