@@ -1,0 +1,60 @@
+{
+  "name": "funish.net",
+  "version": "0.0.0",
+  "private": true,
+  "description": "",
+  "homepage": "https://github.com/funish/funish.net#readme",
+  "bugs": {
+    "url": "https://github.com/funish/funish.net/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Funish",
+    "email": "contact@funish.net",
+    "url": "http://www.funish.net/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/funish/funish.net.git"
+  },
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "check": "vp check --fix",
+    "postinstall": "nuxt prepare && vp config"
+  },
+  "devDependencies": {
+    "@iconify-json/lucide": "1.2.99",
+    "@iconify-json/simple-icons": "1.2.75",
+    "@nuxt/image": "2.0.0",
+    "@nuxt/ui": "4.6.0",
+    "@nuxtjs/i18n": "10.2.4",
+    "@nuxtjs/mdc": "0.21.0",
+    "@tanstack/vue-table": "8.21.3",
+    "@types/node": "25.5.0",
+    "@types/pg": "8.20.0",
+    "@types/ua-parser-js": "0.7.39",
+    "@unovis/vue": "1.6.4",
+    "@vueuse/nuxt": "14.2.1",
+    "date-fns": "4.1.0",
+    "geoip0": "0.0.12",
+    "ipdo": "0.0.6",
+    "isbot": "5.1.36",
+    "nuxt": "4.4.2",
+    "openapi-renderer": "0.1.1",
+    "tailwindcss": "4.2.2",
+    "ua-parser-js": "2.0.9",
+    "undns": "0.0.11",
+    "uqr": "0.1.2",
+    "vite-plus": "0.1.14",
+    "zod": "4.3.6"
+  },
+  "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319",
+  "pnpm": {
+    "overrides": {
+      "vite": "npm:rolldown-vite@latest"
+    }
+  }
+}
