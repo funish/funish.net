@@ -15,6 +15,7 @@ const props = defineProps<{
   lastPublish?: string;
   distTags?: Record<string, string>;
   keywords?: string[];
+  identifier?: string;
   size?: number;
   fileCount?: number;
 }>();
@@ -158,9 +159,12 @@ async function copyReadme() {
 
     <!-- Install command (Winget) -->
     <ProseCodeGroup v-else-if="source === 'winget'">
-      <ProsePre icon="i-lucide-package" filename="winget" :code="`winget install --id ${name}`">{{
-        `winget install --id ${name}`
-      }}</ProsePre>
+      <ProsePre
+        icon="i-lucide-package"
+        filename="winget"
+        :code="`winget install --id ${identifier ?? name}`"
+        >{{ `winget install --id ${identifier ?? name}` }}</ProsePre
+      >
     </ProseCodeGroup>
 
     <!-- Keywords -->

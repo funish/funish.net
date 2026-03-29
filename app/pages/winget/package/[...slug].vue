@@ -113,6 +113,7 @@ function onTabChange(value: string | number) {
       <PackageHero
         source="winget"
         :name="locale?.PackageName ?? packageName"
+        :identifier="packageName"
         :description="locale?.ShortDescription"
         :version="displayVersion"
         :homepage="locale?.PackageUrl"
