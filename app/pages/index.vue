@@ -2,10 +2,10 @@
 const { t } = useI18n();
 
 const searchTerm = ref("");
-const source = ref<"npm" | "winget">("npm");
+const source = useLocalStorage<"npm" | "winget">("search-source", "npm");
 
 const sourceItems = computed(() => [
-  { label: "NPM", value: "npm" as const, icon: "i-simple-icons-npm" },
+  { label: "NPM", value: "npm" as const, icon: "i-vscode-icons-file-type-npm" },
   { label: "Winget", value: "winget" as const, icon: "i-lucide-package" },
 ]);
 

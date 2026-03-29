@@ -17,6 +17,9 @@ importers:
       '@iconify-json/simple-icons':
         specifier: 1.2.75
         version: 1.2.75
+      '@iconify-json/vscode-icons':
+        specifier: 1.2.45
+        version: 1.2.45
       '@nuxt/image':
         specifier: 2.0.0
         version: 2.0.0(db0@0.3.4)(ioredis@5.10.1)(magicast@0.5.2)
@@ -668,6 +671,9 @@ packages:
 
   '@iconify-json/simple-icons@1.2.75':
     resolution: {integrity: sha512-KvcCUbvcBWb0sbqLIxHoY8z5/piXY08wcY9gfMhF+ph3AfzGMaSmZFkUY71HSXAljQngXkgs4bdKdekO0HQWvg==}
+
+  '@iconify-json/vscode-icons@1.2.45':
+    resolution: {integrity: sha512-ow+ueibMIq79ueM1kv6cOWgHx8jfh1XJQi2RrqMHb4HLbvIBlxpy5PCMvOJXlA68R6fBAHpWQeh6uWx7VKEVsA==}
 
   '@iconify/collections@1.0.666':
     resolution: {integrity: sha512-dAwFrwbb0exAEJeM9sbLhCTcTcFxUpzvH2fm0dLKCJ10QMna0MSWKEk3Z0QM75QT2d13m9zytjcMSZxUEQt9iw==}
@@ -7500,6 +7506,10 @@ snapshots:
       '@iconify/types': 2.0.0
 
   '@iconify-json/simple-icons@1.2.75':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/vscode-icons@1.2.45':
     dependencies:
       '@iconify/types': 2.0.0
 

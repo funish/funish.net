@@ -10,9 +10,15 @@ const { search } = useSearch();
 const { checkOrgExists } = useNpm();
 
 const query = ref((route.query.q as string) || "");
-const source = ref<SearchSource>((route.query.source as SearchSource) || "npm");
-const sort = ref<NpmSort | "best">((route.query.sort as NpmSort) || "best");
-const filter = ref<string>((route.query.filter as string) || "all");
+const source = useLocalStorage<SearchSource>(
+  "search-source",
+  (route.query.source as SearchSource) || "npm",
+);
+const sort = useLocalStorage<NpmSort | "best">(
+  "search-sort",
+  (route.query.sort as NpmSort) || "best",
+);
+const filter = useLocalStorage<string>("search-filter", (route.query.filter as string) || "all");
 const page = computed(() => Number(route.query.page) || 1);
 const pageSize = 20;
 const maxPage = 250;
@@ -142,33 +148,35 @@ useSeoMeta({
 </script>
 
 <template>
-  <UContainer class="py-8">
+  <UContainer class="py-4 sm:py-8">
     <!-- Search bar -->
-    <UFieldGroup class="w-full">
-      <USelectMenu
-        v-model="source"
-        :items="sourceItems"
-        value-key="value"
-        :ui="{ base: 'w-28 shrink-0' }"
-      />
+    <div class="flex flex-col gap-2 sm:flex-row">
+      <UFieldGroup class="w-full">
+        <USelectMenu
+          v-model="source"
+          :items="sourceItems"
+          value-key="value"
+          :ui="{ base: 'w-28 shrink-0' }"
+        />
 
-      <UInput
-        v-model="query"
-        :placeholder="t('search.placeholder')"
-        icon="i-lucide-search"
-        size="lg"
-        class="flex-1"
-        @keydown.enter="doSearch"
-      />
+        <UInput
+          v-model="query"
+          :placeholder="t('search.placeholder')"
+          icon="i-lucide-search"
+          size="lg"
+          class="flex-1"
+          @keydown.enter="doSearch"
+        />
+      </UFieldGroup>
 
       <USelectMenu
         v-if="source === 'npm'"
         v-model="filter"
         :items="filterItems"
         value-key="value"
-        :ui="{ base: 'w-32 shrink-0' }"
+        class="w-full sm:w-32 sm:shrink-0"
       />
-    </UFieldGroup>
+    </div>
 
     <!-- Org suggestion card -->
     <div v-if="orgSuggestion && !loading" class="mt-4">
