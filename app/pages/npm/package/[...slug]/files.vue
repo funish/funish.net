@@ -126,9 +126,11 @@ const isBinaryFile = computed(() => {
     </template>
 
     <template v-else>
-      <div class="border-muted flex max-h-150 overflow-hidden rounded-lg border">
+      <div class="border-muted flex flex-col overflow-hidden rounded-lg border sm:flex-row">
         <!-- File tree -->
-        <div class="border-muted bg-muted/30 w-72 shrink-0 overflow-auto border-r p-2">
+        <div
+          class="bg-muted/30 sm:border-muted max-h-80 shrink-0 overflow-auto p-2 sm:max-h-150 sm:w-70 sm:border-r"
+        >
           <UTree v-if="treeItems.length" :items="treeItems" class="w-full">
             <template #item-leading="{ item }">
               <ProseCodeIcon
@@ -142,7 +144,7 @@ const isBinaryFile = computed(() => {
 
         <!-- File preview -->
         <div
-          class="min-w-0 flex-1 overflow-auto [&>div]:my-0! [&>div]:rounded-none! [&>div]:border-0!"
+          class="max-h-150 min-w-0 flex-1 overflow-auto [&>div]:my-0! [&>div]:rounded-none! [&>div]:border-0!"
         >
           <template v-if="fileLoading">
             <div class="flex h-full min-h-48 items-center justify-center">
