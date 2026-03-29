@@ -15,6 +15,11 @@ export interface WingetVersionData {
   Channel?: string;
 }
 
+// Winget available locale
+export interface WingetLocaleInfo {
+  PackageLocale: string;
+}
+
 // Winget installer (based on official OpenAPI spec)
 export interface WingetInstallerData {
   InstallerIdentifier?: string;

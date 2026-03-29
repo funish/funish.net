@@ -79,7 +79,7 @@ const pagination = ref({
                 SHA256: {{ row.original.InstallerSha256 }}
               </p>
             </div>
-            <div class="flex shrink-0 items-center gap-1">
+            <div class="flex shrink-0 items-center gap-1 self-center">
               <UBadge
                 :label="row.original.Architecture ?? 'N/A'"
                 variant="subtle"

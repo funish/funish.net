@@ -102,7 +102,7 @@ const { t } = useI18n();
       <!-- Release notes -->
       <div v-if="locale.ReleaseNotes">
         <h3 class="mb-2 font-semibold">{{ t("package.releaseNotes") }}</h3>
-        <p class="text-muted whitespace-pre-wrap">{{ locale.ReleaseNotes }}</p>
+        <MDC :value="locale.ReleaseNotes" class="[&_img]:inline! [&_img]:w-auto!" />
       </div>
 
       <!-- Documentation links -->
@@ -123,7 +123,7 @@ const { t } = useI18n();
       <!-- Installation notes -->
       <div v-if="locale.InstallationNotes">
         <h3 class="mb-2 font-semibold">{{ t("package.installationNotes") }}</h3>
-        <p class="text-muted whitespace-pre-wrap">{{ locale.InstallationNotes }}</p>
+        <MDC :value="locale.InstallationNotes" class="[&_img]:inline! [&_img]:w-auto!" />
       </div>
     </div>
   </div>

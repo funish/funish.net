@@ -3,8 +3,8 @@ import type { WingetLocaleData, WingetVersionData } from "~/types/winget";
 
 const route = useRoute();
 const router = useRouter();
-const { t } = useI18n();
-const { getVersions, getLocale } = useWinget();
+const { t, locale: userLocale } = useI18n();
+const { getVersions, getLocales, getLocale } = useWinget();
 
 const slug = route.params.slug as string[];
 const { packageName, version } = usePackageSlug(slug);
@@ -32,9 +32,17 @@ const displayVersion = computed(() => {
 });
 
 // Fetch locale for the display version to get full package info
-const { data: locale } = await useAsyncData<WingetLocaleData>(
+const { data: locale } = await useAsyncData<WingetLocaleData | undefined>(
   computed(() => `winget-locale-${packageName}-${displayVersion.value}`),
-  () => getLocale(packageName, displayVersion.value),
+  async () => {
+    const locales = await getLocales(packageName, displayVersion.value);
+    if (!locales.length) return undefined;
+    const available = locales.map((l) => l.PackageLocale);
+    // Prefer user's locale, fallback to en-US
+    const preferred = userLocale.value === "zh_cn" ? "zh-CN" : "en-US";
+    const target = available.includes(preferred) ? preferred : available[0];
+    return getLocale(packageName, displayVersion.value, target);
+  },
   { lazy: true },
 );
 

@@ -2,6 +2,7 @@ import type {
   WingetApiResponse,
   WingetInstallerData,
   WingetLocaleData,
+  WingetLocaleInfo,
   WingetMatchType,
   WingetPackageData,
   WingetSearchRequest,
@@ -72,6 +73,16 @@ export function useWinget() {
   }
 
   /**
+   * Get available locales for a specific version
+   */
+  async function getLocales(id: string, version: string): Promise<WingetLocaleInfo[]> {
+    const res = await $fetch<WingetApiResponse<WingetLocaleInfo[]>>(
+      `${API}/packages/${id}/versions/${version}/locales`,
+    );
+    return res.Data;
+  }
+
+  /**
    * Get locale info for a specific version (contains full description)
    */
   async function getLocale(
@@ -91,6 +102,7 @@ export function useWinget() {
     getVersions,
     getVersion,
     getInstallers,
+    getLocales,
     getLocale,
   };
 }
