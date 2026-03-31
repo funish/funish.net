@@ -19,8 +19,10 @@ const {
   data: pkg,
   pending,
   error,
-} = await useAsyncData<NpmPackage>(dataKey, () =>
-  version ? getPackageVersion(packageName, version) : getPackage(packageName),
+} = await useAsyncData<NpmPackage>(
+  dataKey,
+  () => (version ? getPackageVersion(packageName, version) : getPackage(packageName)),
+  { lazy: true },
 );
 
 const { data: downloads } = await useAsyncData(

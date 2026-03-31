@@ -21,6 +21,7 @@ const {
 } = await useAsyncData<WingetVersionData[]>(
   computed(() => `winget-versions-${packageName}`),
   () => getVersions(packageName),
+  { lazy: true },
 );
 
 // Determine the display version (from URL param or latest semver from versions list)

@@ -61,7 +61,6 @@
     "version": "Version",
     "size": "Size",
     "files_count": "Files",
-    "allVersions": "All Versions",
     "current": "Current",
     "distTags": "Distribution Tags",
     "tab": {

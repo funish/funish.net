@@ -58,7 +58,7 @@ const pagination = ref({
       :title="t('common.error')"
     />
 
-    <div v-else-if="installers?.length" class="space-y-4">
+    <div v-else-if="installers?.length">
       <UTable
         ref="table"
         v-model:pagination="pagination"
@@ -67,7 +67,6 @@ const pagination = ref({
         :pagination-options="{
           getPaginationRowModel: getPaginationRowModel(),
         }"
-        class="flex-1"
       >
         <template #InstallerUrl-cell="{ row }">
           <div class="flex items-start justify-between gap-3">
