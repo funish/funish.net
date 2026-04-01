@@ -56,51 +56,49 @@ const pagination = ref({
 </script>
 
 <template>
-  <div class="py-4">
-    <UTable
-      ref="table"
-      v-model:pagination="pagination"
-      :data="data"
-      :columns="columns"
-      :pagination-options="{
-        getPaginationRowModel: getPaginationRowModel(),
-      }"
-    >
-      <template #version-cell="{ row }">
-        <div class="flex items-center gap-2">
-          <NuxtLink
-            :to="`/npm/package/${packageName}/v/${row.original.version}`"
-            class="font-mono hover:underline"
-          >
-            {{ row.original.version }}
-          </NuxtLink>
-          <UBadge
-            v-if="row.original.isCurrent"
-            :label="t('package.current')"
-            color="primary"
-            variant="subtle"
-          />
-          <UBadge
-            v-for="tag in row.original.tags"
-            :key="tag"
-            :label="tag"
-            :color="tag === 'latest' ? 'primary' : 'neutral'"
-            variant="subtle"
-          />
-        </div>
-      </template>
-      <template #date-cell="{ row }">
-        <span class="text-muted">{{ formatRelativeTime(row.original.date, t) }}</span>
-      </template>
-    </UTable>
+  <UTable
+    ref="table"
+    v-model:pagination="pagination"
+    :data="data"
+    :columns="columns"
+    :pagination-options="{
+      getPaginationRowModel: getPaginationRowModel(),
+    }"
+  >
+    <template #version-cell="{ row }">
+      <div class="flex items-center gap-2">
+        <NuxtLink
+          :to="`/npm/package/${packageName}/v/${row.original.version}`"
+          class="font-mono hover:underline"
+        >
+          {{ row.original.version }}
+        </NuxtLink>
+        <UBadge
+          v-if="row.original.isCurrent"
+          :label="t('package.current')"
+          color="primary"
+          variant="subtle"
+        />
+        <UBadge
+          v-for="tag in row.original.tags"
+          :key="tag"
+          :label="tag"
+          :color="tag === 'latest' ? 'primary' : 'neutral'"
+          variant="subtle"
+        />
+      </div>
+    </template>
+    <template #date-cell="{ row }">
+      <span class="text-muted">{{ formatRelativeTime(row.original.date, t) }}</span>
+    </template>
+  </UTable>
 
-    <div class="border-default flex justify-end border-t px-4 pt-4">
-      <UPagination
-        :page="(table?.tableApi?.getState().pagination.pageIndex || 0) + 1"
-        :items-per-page="table?.tableApi?.getState().pagination.pageSize"
-        :total="table?.tableApi?.getFilteredRowModel().rows.length"
-        @update:page="(p) => table?.tableApi?.setPageIndex(p - 1)"
-      />
-    </div>
+  <div class="border-default flex justify-end border-t px-4 pt-4">
+    <UPagination
+      :page="(table?.tableApi?.getState().pagination.pageIndex || 0) + 1"
+      :items-per-page="table?.tableApi?.getState().pagination.pageSize"
+      :total="table?.tableApi?.getFilteredRowModel().rows.length"
+      @update:page="(p) => table?.tableApi?.setPageIndex(p - 1)"
+    />
   </div>
 </template>

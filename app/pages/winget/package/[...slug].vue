@@ -122,7 +122,9 @@ function onTabChange(value: string | number) {
       <div class="mt-4">
         <UTabs :model-value="activeTab" :items="wingetTabs" @update:model-value="onTabChange">
           <template #content>
-            <NuxtPage />
+            <div class="py-2">
+              <NuxtPage />
+            </div>
           </template>
         </UTabs>
       </div>

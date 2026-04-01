@@ -70,13 +70,13 @@
     "channel": "通道",
     "support": "技术支持",
     "privacy": "隐私政策",
-    "purchase": "购买"
+    "purchase": "购买",
+    "installers": "安装器",
+    "noInstallers": "暂无安装器"
   },
   "user": {
     "packages": "包",
     "noPackages": "未找到包",
-    "packageCount": "{count} 个包",
-    "loadMore": "加载更多",
     "filterPlaceholder": "筛选包..."
   },
   "org": {
@@ -109,6 +109,7 @@
     "notFound": "未找到",
     "back": "返回",
     "perMonth": "/月",
-    "na": "无"
+    "na": "无",
+    "noResults": "暂无结果"
   }
 }

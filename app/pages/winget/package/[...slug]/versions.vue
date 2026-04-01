@@ -45,47 +45,45 @@ const pagination = ref({
 </script>
 
 <template>
-  <div class="py-4">
-    <UTable
-      ref="table"
-      v-model:pagination="pagination"
-      :data="data"
-      :columns="columns"
-      :pagination-options="{
-        getPaginationRowModel: getPaginationRowModel(),
-      }"
-    >
-      <template #PackageVersion-cell="{ row }">
-        <div class="flex items-center gap-2">
-          <NuxtLink
-            :to="`/winget/package/${packageName}/v/${row.original.PackageVersion}`"
-            class="font-mono hover:underline"
-          >
-            {{ row.original.PackageVersion }}
-          </NuxtLink>
-          <UBadge
-            v-if="row.original.PackageVersion === unref(displayVersion)"
-            :label="t('package.current')"
-            color="primary"
-            variant="subtle"
-          />
-        </div>
-      </template>
-      <template #DefaultLocale-cell="{ row }">
-        <span class="text-muted">{{ row.original.DefaultLocale }}</span>
-      </template>
-      <template #Channel-cell="{ row }">
-        <span class="text-muted">{{ row.original.Channel || "-" }}</span>
-      </template>
-    </UTable>
+  <UTable
+    ref="table"
+    v-model:pagination="pagination"
+    :data="data"
+    :columns="columns"
+    :pagination-options="{
+      getPaginationRowModel: getPaginationRowModel(),
+    }"
+  >
+    <template #PackageVersion-cell="{ row }">
+      <div class="flex items-center gap-2">
+        <NuxtLink
+          :to="`/winget/package/${packageName}/v/${row.original.PackageVersion}`"
+          class="font-mono hover:underline"
+        >
+          {{ row.original.PackageVersion }}
+        </NuxtLink>
+        <UBadge
+          v-if="row.original.PackageVersion === unref(displayVersion)"
+          :label="t('package.current')"
+          color="primary"
+          variant="subtle"
+        />
+      </div>
+    </template>
+    <template #DefaultLocale-cell="{ row }">
+      <span class="text-muted">{{ row.original.DefaultLocale }}</span>
+    </template>
+    <template #Channel-cell="{ row }">
+      <span class="text-muted">{{ row.original.Channel || "-" }}</span>
+    </template>
+  </UTable>
 
-    <div class="border-default flex justify-end border-t px-4 pt-4">
-      <UPagination
-        :page="(table?.tableApi?.getState().pagination.pageIndex || 0) + 1"
-        :items-per-page="table?.tableApi?.getState().pagination.pageSize"
-        :total="table?.tableApi?.getFilteredRowModel().rows.length"
-        @update:page="(p) => table?.tableApi?.setPageIndex(p - 1)"
-      />
-    </div>
+  <div class="border-default flex justify-end border-t px-4 pt-4">
+    <UPagination
+      :page="(table?.tableApi?.getState().pagination.pageIndex || 0) + 1"
+      :items-per-page="table?.tableApi?.getState().pagination.pageSize"
+      :total="table?.tableApi?.getFilteredRowModel().rows.length"
+      @update:page="(p) => table?.tableApi?.setPageIndex(p - 1)"
+    />
   </div>
 </template>

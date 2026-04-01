@@ -127,13 +127,13 @@ function onTabChange(value: string | number) {
         :file-count="pkg.dist?.fileCount"
       />
 
-      <div class="mt-4">
-        <UTabs :model-value="activeTab" :items="npmTabs" @update:model-value="onTabChange">
-          <template #content>
+      <UTabs :model-value="activeTab" :items="npmTabs" @update:model-value="onTabChange">
+        <template #content>
+          <div class="py-2">
             <NuxtPage />
-          </template>
-        </UTabs>
-      </div>
+          </div>
+        </template>
+      </UTabs>
     </template>
   </UContainer>
 </template>

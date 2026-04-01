@@ -33,18 +33,16 @@ const groups = computed<DepGroup[]>(() => {
 </script>
 
 <template>
-  <div class="py-4">
-    <div v-if="groups.length === 0" class="text-muted">
-      {{ t("package.noDependencies") }}
-    </div>
-    <div v-else class="space-y-6">
-      <div v-for="group in groups" :key="group.label">
-        <h4 class="mb-3 font-semibold">{{ group.label }}</h4>
-        <div class="flex flex-wrap gap-2">
-          <NuxtLink v-for="(version, name) in group.deps" :key="name" :to="`/npm/package/${name}`">
-            <UBadge :label="`${name}@${version}`" variant="outline" color="neutral" />
-          </NuxtLink>
-        </div>
+  <div v-if="groups.length === 0" class="text-muted">
+    {{ t("package.noDependencies") }}
+  </div>
+  <div v-else class="space-y-6">
+    <div v-for="group in groups" :key="group.label">
+      <h4 class="mb-3 font-semibold">{{ group.label }}</h4>
+      <div class="flex flex-wrap gap-2">
+        <NuxtLink v-for="(version, name) in group.deps" :key="name" :to="`/npm/package/${name}`">
+          <UBadge :label="`${name}@${version}`" variant="outline" color="neutral" />
+        </NuxtLink>
       </div>
     </div>
   </div>

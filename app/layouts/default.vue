@@ -17,7 +17,7 @@ const footerItems = computed(() => [
 
 <template>
   <div class="flex min-h-svh flex-col">
-    <UHeader :ui="{ container: 'max-w-7xl' }">
+    <UHeader>
       <template #title>
         <span class="text-lg font-bold">Funish</span>
       </template>
@@ -51,7 +51,7 @@ const footerItems = computed(() => [
 
     <USeparator />
 
-    <UFooter :ui="{ container: 'max-w-7xl' }">
+    <UFooter>
       <template #left>
         <span class="text-muted text-sm"> &copy; {{ new Date().getFullYear() }} Funish </span>
       </template>

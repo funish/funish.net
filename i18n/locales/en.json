@@ -70,13 +70,13 @@
     "channel": "Channel",
     "support": "Support",
     "privacy": "Privacy",
-    "purchase": "Purchase"
+    "purchase": "Purchase",
+    "installers": "Installers",
+    "noInstallers": "No installers available"
   },
   "user": {
     "packages": "Packages",
     "noPackages": "No packages found",
-    "packageCount": "{count} packages",
-    "loadMore": "Load more",
     "filterPlaceholder": "Filter packages..."
   },
   "org": {
@@ -109,6 +109,7 @@
     "notFound": "Not Found",
     "back": "Back",
     "perMonth": "/mo",
-    "na": "N/A"
+    "na": "N/A",
+    "noResults": "No results"
   }
 }
