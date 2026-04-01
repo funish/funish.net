@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { NpmPackage } from "~/types/npm";
+import type { NpmDownloadPoint, NpmPackage, NpmPackageFull } from "~/types/npm";
 
 const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
-const { getPackage, getPackageVersion, getDownloads, getFullMetadata } = useNpm();
+const { getFullMetadata, getDownloads } = useNpm();
 
 const slug = route.params.slug as string[];
 const { packageName, version, isScoped } = usePackageSlug(slug);
@@ -13,43 +13,31 @@ if (!packageName || (isScoped && slug.length < 2) || (!isScoped && slug.length <
   throw createError({ statusCode: 404, message: t("common.notFound") });
 }
 
-const dataKey = computed(() => `npm-${packageName}-${version ?? "latest"}`);
-
+// Single full metadata fetch — contains all versions, dist-tags, readme, etc.
 const {
-  data: pkg,
+  data: metadata,
   pending,
   error,
-} = await useAsyncData<NpmPackage>(
-  dataKey,
-  () => (version ? getPackageVersion(packageName, version) : getPackage(packageName)),
+} = await useAsyncData<NpmPackageFull>(
+  `npm-metadata-${packageName}`,
+  () => getFullMetadata(packageName),
   { lazy: true },
 );
 
-const { data: downloads } = await useAsyncData(
+// Derive current version's package data from full metadata
+const pkg = computed<NpmPackage | undefined>(() => {
+  if (!metadata.value) return undefined;
+  const ver = version ?? metadata.value["dist-tags"]?.latest;
+  return ver ? metadata.value.versions?.[ver] : undefined;
+});
+
+const distTags = computed(() => metadata.value?.["dist-tags"] ?? {});
+
+const { data: downloads } = await useAsyncData<NpmDownloadPoint>(
   computed(() => `npm-downloads-${packageName}`),
   () => getDownloads(packageName, "last-month"),
   { lazy: true },
 );
-
-const { data: distTags } = await useAsyncData(
-  `npm-disttags-${packageName}`,
-  async () => {
-    const metadata = await getFullMetadata(packageName);
-    return metadata["dist-tags"];
-  },
-  {
-    lazy: true,
-    getCachedData(key, nuxtApp) {
-      return nuxtApp.payload.data[`npm-metadata-${packageName}`];
-    },
-  },
-);
-
-// Provide package data to child routes
-provide("npmPkg", pkg);
-provide("npmPackageName", packageName);
-provide("npmVersion", version);
-provide("npmDistTags", distTags);
 
 const authorName = computed(() => {
   if (!pkg.value?.author) return undefined;

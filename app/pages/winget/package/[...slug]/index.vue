@@ -1,7 +1,23 @@
 <script setup lang="ts">
-import type { WingetLocaleData } from "~/types/winget";
+import type { WingetLocaleData, WingetVersionData } from "~/types/winget";
 
-const locale = inject<Ref<WingetLocaleData | undefined>>("wingetLocale")!;
+const route = useRoute();
+const slug = route.params.slug as string[];
+const { packageName, version } = usePackageSlug(slug);
+
+const { data: versions } = useNuxtData<WingetVersionData[]>(`winget-versions-${packageName}`);
+
+const displayVersion = computed(() => {
+  if (!versions.value?.length) return "";
+  if (version && versions.value.some((v) => v.PackageVersion === version)) return version;
+  const semver = versions.value.find((v) => /^\d/.test(v.PackageVersion));
+  return semver?.PackageVersion ?? versions.value[0]!.PackageVersion;
+});
+
+const { data: locale } = useNuxtData<WingetLocaleData | undefined>(
+  `winget-locale-${packageName}-${displayVersion.value}`,
+);
+
 const { t } = useI18n();
 </script>
 

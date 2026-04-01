@@ -1,7 +1,12 @@
 <script setup lang="ts">
-const packageName = inject<string>("npmPackageName")!;
-const pkg = inject<Ref>("npmPkg")!;
-const version = computed(() => pkg.value?.version ?? "latest");
+import type { NpmPackageFull } from "~/types/npm";
+
+const route = useRoute();
+const slug = route.params.slug as string[];
+const { packageName, version } = usePackageSlug(slug);
+const currentVersion = version ?? "latest";
+
+const { data: metadata } = useNuxtData<NpmPackageFull>(`npm-metadata-${packageName}`);
 
 const { t } = useI18n();
 const { getReadme } = useJsdelivr();
@@ -11,13 +16,19 @@ const {
   pending,
   error,
 } = await useAsyncData(
-  `npm-readme-${packageName}-${version.value}`,
+  `npm-readme-${packageName}-${currentVersion}`,
   async () => {
-    // Prefer readme from npm metadata (already fetched by parent), fallback to jsdelivr
-    if (pkg.value?.readme) return pkg.value.readme;
-    return getReadme(packageName, version.value);
+    // Prefer readme from full metadata (already fetched by parent)
+    if (version) {
+      const verReadme = metadata.value?.versions?.[version]?.readme;
+      if (verReadme) return verReadme;
+    } else if (metadata.value?.readme) {
+      return metadata.value.readme;
+    }
+    // Fallback to jsdelivr
+    return getReadme(packageName, currentVersion);
   },
-  { watch: [version], lazy: true },
+  { lazy: true },
 );
 </script>
 

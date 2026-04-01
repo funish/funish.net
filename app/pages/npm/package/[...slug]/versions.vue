@@ -4,20 +4,14 @@ import { getPaginationRowModel } from "@tanstack/vue-table";
 
 import type { NpmPackageFull } from "~/types/npm";
 
-const pkg = inject<Ref>("npmPkg")!;
-const packageName = inject<string>("npmPackageName")!;
-const currentVersion = inject<string | null>("npmVersion")!;
+const route = useRoute();
+const slug = route.params.slug as string[];
+const { packageName, version } = usePackageSlug(slug);
+const { data: metadata } = useNuxtData<NpmPackageFull>(`npm-metadata-${packageName}`);
 
 const { t } = useI18n();
-const { getFullMetadata } = useNpm();
 
 const table = useTemplateRef("table");
-
-const { data: metadata } = await useAsyncData<NpmPackageFull>(
-  `npm-metadata-${packageName}`,
-  () => getFullMetadata(packageName),
-  { lazy: true },
-);
 
 const distTags = computed(() => metadata.value?.["dist-tags"] ?? {});
 
@@ -33,10 +27,10 @@ const data = computed<VersionRow[]>(() => {
   const skip = new Set(["created", "modified"]);
   return Object.entries(metadata.value.time)
     .filter(([key]) => !skip.has(key))
-    .map(([version, date]) => ({
-      version,
+    .map(([ver, date]) => ({
+      version: ver,
       date,
-      isCurrent: version === (currentVersion ?? pkg.value?.version),
+      isCurrent: ver === (version ?? metadata.value?.["dist-tags"]?.latest),
       tags: Object.entries(distTags.value)
         .filter(([, v]) => v === version)
         .map(([tag]) => tag),

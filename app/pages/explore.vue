@@ -6,7 +6,24 @@ const { search } = useSearch();
 
 const { data: npmTrending, pending: npmPending } = await useAsyncData(
   "explore-npm",
-  () => search({ query: "popularity:>1", source: "npm", size: 30, sort: "popularity" }),
+  async () => {
+    const data = await search({
+      query: "popularity:>0.5+maintenance:>0.5",
+      source: "npm",
+      size: 250,
+      sort: "popularity",
+    });
+    const threeMonthsAgo = Date.now() - 90 * 24 * 60 * 60 * 1000;
+    const sorted = [...data.results]
+      .filter(
+        (r) =>
+          r.downloads != null &&
+          r.lastPublish &&
+          new Date(r.lastPublish).getTime() > threeMonthsAgo,
+      )
+      .sort((a, b) => (b.downloads ?? 0) - (a.downloads ?? 0));
+    return { results: sorted.slice(0, 30), total: 30 };
+  },
   {
     lazy: true,
     getCachedData(key, nuxtApp) {

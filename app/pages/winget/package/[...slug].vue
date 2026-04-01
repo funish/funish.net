@@ -49,12 +49,6 @@ const { data: locale } = await useAsyncData<WingetLocaleData | undefined>(
   { lazy: true },
 );
 
-// Provide data to child routes
-provide("wingetPackageName", packageName);
-provide("wingetDisplayVersion", displayVersion);
-provide("wingetVersions", versions);
-provide("wingetLocale", locale);
-
 useSeoMeta({
   title: () =>
     locale.value

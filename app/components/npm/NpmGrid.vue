@@ -25,7 +25,7 @@ const { t } = useI18n();
 
     <template v-else-if="packages.length > 0">
       <div class="grid grid-cols-1 gap-3 overflow-hidden sm:grid-cols-2 lg:grid-cols-3">
-        <SearchPackageCard
+        <PackageCard
           v-for="(pkg, i) in packages"
           :key="i"
           :item="pkg"

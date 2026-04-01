@@ -1,7 +1,15 @@
 <script setup lang="ts">
-import type { NpmPackage } from "~/types/npm";
+import type { NpmPackage, NpmPackageFull } from "~/types/npm";
 
-const pkg = inject<Ref<NpmPackage>>("npmPkg")!;
+const route = useRoute();
+const slug = route.params.slug as string[];
+const { packageName, version } = usePackageSlug(slug);
+const { data: metadata } = useNuxtData<NpmPackageFull>(`npm-metadata-${packageName}`);
+const pkg = computed<NpmPackage | undefined>(() => {
+  if (!metadata.value) return undefined;
+  const ver = version ?? metadata.value["dist-tags"]?.latest;
+  return ver ? metadata.value.versions?.[ver] : undefined;
+});
 const { t } = useI18n();
 
 interface DepGroup {

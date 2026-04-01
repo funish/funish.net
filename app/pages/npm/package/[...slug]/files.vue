@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import type { TreeItem } from "@nuxt/ui";
 
-import type { JsdelivrFileNode, JsdelivrFileList } from "~/types/npm";
+import type { JsdelivrFileNode, JsdelivrFileList, NpmPackage } from "~/types/npm";
 
-const pkg = inject<Ref>("npmPkg")!;
-const packageName = inject<string>("npmPackageName")!;
-const version = computed(() => pkg.value?.version ?? "latest");
+const route = useRoute();
+const slug = route.params.slug as string[];
+const { packageName, version } = usePackageSlug(slug);
+const { data: pkg } = useNuxtData<NpmPackage>(`npm-${packageName}-${version ?? "latest"}`);
+const currentVersion = computed(() => pkg.value?.version ?? "latest");
 
 const { t } = useI18n();
 const { getFiles, getFileContent } = useJsdelivr();
@@ -82,7 +84,7 @@ async function loadFileContent(path: string) {
   fileLoading.value = true;
   fileError.value = false;
   try {
-    fileContent.value = await getFileContent(packageName, version.value, path);
+    fileContent.value = await getFileContent(packageName, currentVersion.value, path);
   } catch {
     fileError.value = true;
     fileContent.value = null;
@@ -96,8 +98,8 @@ const {
   pending,
   error,
 } = await useAsyncData<JsdelivrFileList>(
-  `files-${packageName}-${version.value}`,
-  () => getFiles(packageName, version.value),
+  `files-${packageName}-${currentVersion.value}`,
+  () => getFiles(packageName, currentVersion.value),
   { lazy: true },
 );
 

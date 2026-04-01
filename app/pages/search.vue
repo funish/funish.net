@@ -223,7 +223,7 @@ useSeoMeta({
       </template>
 
       <template v-else-if="results.length > 0">
-        <SearchPackageCard v-for="(item, i) in results" :key="i" :item="item" />
+        <PackageCard v-for="(item, i) in results" :key="i" :item="item" />
       </template>
 
       <UAlert v-else-if="error" color="error" icon="i-lucide-circle-alert" :title="error" />

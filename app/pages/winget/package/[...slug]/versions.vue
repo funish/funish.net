@@ -4,9 +4,19 @@ import { getPaginationRowModel } from "@tanstack/vue-table";
 
 import type { WingetVersionData } from "~/types/winget";
 
-const packageName = inject<string>("wingetPackageName")!;
-const displayVersion = inject<Ref<string>>("wingetDisplayVersion")!;
-const versions = inject<Ref<WingetVersionData[] | undefined>>("wingetVersions")!;
+const route = useRoute();
+const slug = route.params.slug as string[];
+const { packageName, version } = usePackageSlug(slug);
+
+const { data: versions } = useNuxtData<WingetVersionData[]>(`winget-versions-${packageName}`);
+
+const displayVersion = computed(() => {
+  if (!versions.value?.length) return "";
+  if (version && versions.value.some((v) => v.PackageVersion === version)) return version;
+  const semver = versions.value.find((v) => /^\d/.test(v.PackageVersion));
+  return semver?.PackageVersion ?? versions.value[0]!.PackageVersion;
+});
+
 const { t } = useI18n();
 
 const table = useTemplateRef("table");
