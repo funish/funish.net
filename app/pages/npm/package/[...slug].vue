@@ -4,7 +4,7 @@ import type { NpmPackage } from "~/types/npm";
 const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
-const { getPackage, getPackageVersion, getDownloads, getDistTags } = useNpm();
+const { getPackage, getPackageVersion, getDownloads, getFullMetadata } = useNpm();
 
 const slug = route.params.slug as string[];
 const { packageName, version, isScoped } = usePackageSlug(slug);
@@ -32,9 +32,17 @@ const { data: downloads } = await useAsyncData(
 );
 
 const { data: distTags } = await useAsyncData(
-  computed(() => `npm-disttags-${packageName}`),
-  () => getDistTags(packageName),
-  { lazy: true },
+  `npm-disttags-${packageName}`,
+  async () => {
+    const metadata = await getFullMetadata(packageName);
+    return metadata["dist-tags"];
+  },
+  {
+    lazy: true,
+    getCachedData(key, nuxtApp) {
+      return nuxtApp.payload.data[`npm-metadata-${packageName}`];
+    },
+  },
 );
 
 // Provide package data to child routes
@@ -102,12 +110,12 @@ function onTabChange(value: string | number) {
 
     <!-- 404 -->
     <template v-else-if="error || !pkg">
-      <div class="flex flex-col items-center justify-center py-24">
-        <UIcon name="i-lucide-package-x" class="text-muted size-16" />
-        <h2 class="mt-4 text-xl font-semibold">{{ t("common.notFound") }}</h2>
-        <p class="text-muted mt-2">{{ packageName }}</p>
-        <UButton class="mt-4" :label="t('common.back')" variant="outline" to="/" />
-      </div>
+      <UEmpty
+        icon="i-lucide-package-x"
+        :title="t('common.notFound')"
+        :description="packageName"
+        :actions="[{ label: t('common.back'), variant: 'outline', to: '/' }]"
+      />
     </template>
 
     <!-- Package detail -->

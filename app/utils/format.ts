@@ -24,7 +24,10 @@ export function formatDate(dateStr: string): string {
 /**
  * Format a relative time string (e.g. "3 days ago")
  */
-export function formatRelativeTime(dateStr: string): string {
+export function formatRelativeTime(
+  dateStr: string,
+  t?: (key: string, params?: Record<string, unknown>) => string,
+): string {
   const date = new Date(dateStr);
   if (Number.isNaN(date.getTime())) return dateStr;
   const now = new Date();
@@ -36,12 +39,21 @@ export function formatRelativeTime(dateStr: string): string {
   const months = Math.floor(days / 30);
   const years = Math.floor(days / 365);
 
-  if (years > 0) return `${years}y ago`;
-  if (months > 0) return `${months}mo ago`;
-  if (days > 0) return `${days}d ago`;
-  if (hours > 0) return `${hours}h ago`;
-  if (minutes > 0) return `${minutes}m ago`;
-  return "just now";
+  if (!t) {
+    if (years > 0) return `${years}y ago`;
+    if (months > 0) return `${months}mo ago`;
+    if (days > 0) return `${days}d ago`;
+    if (hours > 0) return `${hours}h ago`;
+    if (minutes > 0) return `${minutes}m ago`;
+    return "just now";
+  }
+
+  if (years > 0) return t("time.yearsAgo", { n: years });
+  if (months > 0) return t("time.monthsAgo", { n: months });
+  if (days > 0) return t("time.daysAgo", { n: days });
+  if (hours > 0) return t("time.hoursAgo", { n: hours });
+  if (minutes > 0) return t("time.minutesAgo", { n: minutes });
+  return t("time.justNow");
 }
 
 /**

@@ -43,13 +43,6 @@ export function useNpm() {
   }
 
   /**
-   * Get dist-tags for a package (latest, beta, next, etc.)
-   */
-  async function getDistTags(name: string): Promise<Record<string, string>> {
-    return $fetch<Record<string, string>>(`${REGISTRY}/-/package/${name}/dist-tags`);
-  }
-
-  /**
    * Get download stats for a specific period
    */
   async function getDownloads(
@@ -110,7 +103,6 @@ export function useNpm() {
     searchPackages,
     getPackage,
     getPackageVersion,
-    getDistTags,
     getDownloads,
     getDownloadRange,
     getFullMetadata,

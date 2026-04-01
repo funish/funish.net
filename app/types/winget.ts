@@ -27,7 +27,7 @@ export interface WingetInstallerData {
   InstallerUrl?: string;
   Architecture: string;
   InstallerLocale?: string;
-  Platform?: string;
+  Platform?: string | string[];
   MinimumOSVersion?: string;
   InstallerType: string;
   Scope?: string;

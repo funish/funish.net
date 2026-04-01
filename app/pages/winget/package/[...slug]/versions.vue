@@ -20,11 +20,11 @@ const columns: TableColumn<WingetVersionData>[] = [
   },
   {
     accessorKey: "DefaultLocale",
-    header: "Locale",
+    header: t("package.locale"),
   },
   {
     accessorKey: "Channel",
-    header: "Channel",
+    header: t("package.channel"),
   },
 ];
 

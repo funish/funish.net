@@ -23,7 +23,7 @@ const {
 } = await useAsyncData(
   `npm-user-names-${username}`,
   () => getUserPackages(username).then((map) => Object.keys(map).reverse()),
-  { watch: [() => route.params.username] },
+  { watch: [() => route.params.username], lazy: true },
 );
 
 const filteredNames = computed(() => {

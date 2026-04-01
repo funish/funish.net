@@ -12,7 +12,11 @@ const {
   error,
 } = await useAsyncData(
   `npm-readme-${packageName}-${version.value}`,
-  () => getReadme(packageName, version.value),
+  async () => {
+    // Prefer readme from npm metadata (already fetched by parent), fallback to jsdelivr
+    if (pkg.value?.readme) return pkg.value.readme;
+    return getReadme(packageName, version.value);
+  },
   { watch: [version], lazy: true },
 );
 </script>

@@ -32,7 +32,7 @@ const columns: TableColumn<WingetInstallerData>[] = [
   },
   {
     accessorKey: "InstallerLocale",
-    header: "Locale",
+    header: t("package.locale"),
   },
   {
     id: "download",
@@ -72,7 +72,11 @@ const pagination = ref({
           <div class="flex items-start justify-between gap-3">
             <div class="min-w-0 flex-1">
               <span class="block truncate font-mono text-sm">
-                {{ row.original.InstallerUrl ? extractFilename(row.original.InstallerUrl) : "N/A" }}
+                {{
+                  row.original.InstallerUrl
+                    ? extractFilename(row.original.InstallerUrl)
+                    : t("common.na")
+                }}
               </span>
               <p v-if="row.original.InstallerSha256" class="text-muted mt-1 truncate text-xs">
                 SHA256: {{ row.original.InstallerSha256 }}
@@ -101,7 +105,11 @@ const pagination = ref({
               />
               <UBadge
                 v-if="row.original.Platform"
-                :label="row.original.Platform"
+                :label="
+                  Array.isArray(row.original.Platform)
+                    ? row.original.Platform[0]
+                    : row.original.Platform
+                "
                 variant="subtle"
                 size="sm"
                 color="neutral"

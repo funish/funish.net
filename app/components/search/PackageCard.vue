@@ -5,6 +5,8 @@ defineProps<{
   item: UnifiedSearchResult;
   maxKeywords?: number;
 }>();
+
+const { t } = useI18n();
 </script>
 
 <template>
@@ -19,7 +21,8 @@ defineProps<{
         <span class="truncate font-mono text-sm font-semibold">{{ item.name }}</span>
       </div>
       <span v-if="item.downloads" class="text-muted shrink-0 text-xs">
-        {{ formatNumber(item.downloads) }}<span class="text-muted/60">/mo</span>
+        {{ formatNumber(item.downloads)
+        }}<span class="text-muted/60">{{ t("common.perMonth") }}</span>
       </span>
     </div>
 
@@ -60,7 +63,7 @@ defineProps<{
 
       <template v-if="item.lastPublish">
         <span class="text-muted/40">&middot;</span>
-        <span>{{ formatRelativeTime(item.lastPublish) }}</span>
+        <span>{{ formatRelativeTime(item.lastPublish, t) }}</span>
       </template>
 
       <template v-if="item.license">

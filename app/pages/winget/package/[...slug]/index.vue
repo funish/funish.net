@@ -52,7 +52,7 @@ const { t } = useI18n();
         </span>
         <span v-if="locale.PublisherUrl">
           <ULink :to="locale.PublisherUrl" target="_blank" class="text-primary hover:underline">
-            Publisher
+            {{ t("package.publisher") }}
           </ULink>
         </span>
         <span v-if="locale.PublisherSupportUrl">
@@ -61,7 +61,7 @@ const { t } = useI18n();
             target="_blank"
             class="text-primary hover:underline"
           >
-            Support
+            {{ t("package.support") }}
           </ULink>
         </span>
         <span v-if="locale.License">
@@ -75,12 +75,12 @@ const { t } = useI18n();
         </span>
         <span v-if="locale.PrivacyUrl">
           <ULink :to="locale.PrivacyUrl" target="_blank" class="text-primary hover:underline">
-            Privacy
+            {{ t("package.privacy") }}
           </ULink>
         </span>
         <span v-if="locale.PurchaseUrl">
           <ULink :to="locale.PurchaseUrl" target="_blank" class="text-primary hover:underline">
-            Purchase
+            {{ t("package.purchase") }}
           </ULink>
         </span>
       </div>

@@ -122,7 +122,7 @@ const isBinaryFile = computed(() => {
     </template>
 
     <template v-else-if="error">
-      <p class="text-error text-sm">{{ t("common.error") }}</p>
+      <UAlert color="error" icon="i-lucide-circle-alert" :title="t('common.error')" />
     </template>
 
     <template v-else>

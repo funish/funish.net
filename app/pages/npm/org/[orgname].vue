@@ -23,7 +23,7 @@ const {
 } = await useAsyncData(
   `npm-org-names-${orgname}`,
   () => getOrgPackages(orgname).then((map) => Object.keys(map).reverse()),
-  { watch: [() => route.params.orgname] },
+  { watch: [() => route.params.orgname], lazy: true },
 );
 
 const filteredNames = computed(() => {

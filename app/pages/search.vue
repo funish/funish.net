@@ -38,8 +38,8 @@ const error = ref<string | null>(null);
 const totalPages = computed(() => Math.min(Math.ceil(total.value / pageSize), maxPage));
 
 const sourceItems = computed(() => [
-  { label: "NPM", value: "npm" as const, icon: "i-vscode-icons-file-type-npm" },
-  { label: "Winget", value: "winget" as const, icon: "i-lucide-package" },
+  { label: t("search.npm"), value: "npm" as const, icon: "i-vscode-icons-file-type-npm" },
+  { label: t("search.winget"), value: "winget" as const, icon: "i-lucide-package" },
 ]);
 
 const sortItems = computed(() => [

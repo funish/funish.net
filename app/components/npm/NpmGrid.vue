@@ -14,7 +14,7 @@ const { t } = useI18n();
 <template>
   <div>
     <template v-if="loading">
-      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <div v-for="i in 6" :key="i" class="border-muted rounded-lg border p-4">
           <USkeleton class="h-5 w-36" />
           <USkeleton class="mt-2 h-4 w-full" />
@@ -24,7 +24,7 @@ const { t } = useI18n();
     </template>
 
     <template v-else-if="packages.length > 0">
-      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="grid grid-cols-1 gap-3 overflow-hidden sm:grid-cols-2 lg:grid-cols-3">
         <SearchPackageCard
           v-for="(pkg, i) in packages"
           :key="i"

@@ -13,9 +13,7 @@
     "noResults": "No packages found",
     "searchFor": "Search for \"{query}\"",
     "suggestion": {
-      "orgExists": "View all packages from {'@'}{org}",
-      "userHint": "Search by maintainer: {user}",
-      "orgHint": "Search by scope: {'@'}{org}"
+      "orgExists": "View all packages from {'@'}{org}"
     },
     "sort": {
       "bestMatch": "Best match",
@@ -32,8 +30,6 @@
     }
   },
   "package": {
-    "install": "Install",
-    "copy": "Copy",
     "copied": "Copied!",
     "copyReadme": "Copy README",
     "homepage": "Homepage",
@@ -46,23 +42,15 @@
     "lastPublish": "Last publish",
     "downloads": "Downloads",
     "monthly": "monthly",
-    "weekly": "weekly",
-    "versions": "Versions",
     "dependencies": "Dependencies",
     "peerDependencies": "Peer Dependencies",
     "devDependencies": "Dev Dependencies",
-    "files": "Files",
-    "readme": "Readme",
-    "description": "Description",
-    "installers": "Installers",
     "noReadme": "No readme available",
     "noDependencies": "No dependencies",
-    "published": "Published {time}",
     "version": "Version",
     "size": "Size",
     "files_count": "Files",
     "current": "Current",
-    "distTags": "Distribution Tags",
     "tab": {
       "readme": "Readme",
       "versions": "Versions",
@@ -71,15 +59,18 @@
       "description": "Description",
       "installers": "Installers"
     },
-    "filesTree": "Files",
-    "filePreview": "Preview",
     "binaryFile": "Binary file, cannot be displayed",
     "fetchFileError": "Failed to load file content",
     "selectFile": "Select a file to preview",
     "tags": "Tags",
     "releaseNotes": "Release Notes",
     "documentation": "Documentation",
-    "installationNotes": "Installation Notes"
+    "installationNotes": "Installation Notes",
+    "locale": "Locale",
+    "channel": "Channel",
+    "support": "Support",
+    "privacy": "Privacy",
+    "purchase": "Purchase"
   },
   "user": {
     "packages": "Packages",
@@ -96,31 +87,28 @@
   "explore": {
     "title": "Explore",
     "npm": "Trending NPM Packages",
-    "winget": "Featured Winget Packages"
+    "winget": "Featured Winget Packages",
+    "noPackages": "No packages found"
   },
   "home": {
     "title": "Discover Packages",
     "subtitle": "Search across NPM and Winget registries in one place.",
-    "searchPlaceholder": "Search packages...",
-    "search": "Search packages",
-    "sources": {
-      "headline": "Package Sources",
-      "title": "Search across multiple registries",
-      "npm": "Explore over 2 million packages from the NPM registry.",
-      "winget": "Discover Windows applications from the Winget community."
-    },
-    "cta": {
-      "title": "Ready to explore?",
-      "description": "Browse trending packages or search for exactly what you need.",
-      "explore": "Explore packages"
-    }
+    "searchPlaceholder": "Search packages..."
+  },
+  "time": {
+    "justNow": "just now",
+    "minutesAgo": "{n}m ago",
+    "hoursAgo": "{n}h ago",
+    "daysAgo": "{n}d ago",
+    "monthsAgo": "{n}mo ago",
+    "yearsAgo": "{n}y ago"
   },
   "common": {
     "loading": "Loading...",
     "error": "An error occurred",
     "notFound": "Not Found",
     "back": "Back",
-    "showMore": "Show more",
-    "page": "Page {current} of {total}"
+    "perMonth": "/mo",
+    "na": "N/A"
   }
 }

@@ -26,8 +26,9 @@ const {
 
 // Determine the display version (from URL param or latest semver from versions list)
 const displayVersion = computed(() => {
-  if (version) return version;
   if (!versions.value?.length) return "";
+  // If URL specifies a version, validate it exists
+  if (version && versions.value.some((v) => v.PackageVersion === version)) return version;
   const semver = versions.value.find((v) => /^\d/.test(v.PackageVersion));
   return semver?.PackageVersion ?? versions.value[0]!.PackageVersion;
 });
@@ -36,6 +37,7 @@ const displayVersion = computed(() => {
 const { data: locale } = await useAsyncData<WingetLocaleData | undefined>(
   computed(() => `winget-locale-${packageName}-${displayVersion.value}`),
   async () => {
+    if (!displayVersion.value) return undefined;
     const locales = await getLocales(packageName, displayVersion.value);
     if (!locales.length) return undefined;
     const available = locales.map((l) => l.PackageLocale);
@@ -101,12 +103,12 @@ function onTabChange(value: string | number) {
 
     <!-- 404 -->
     <template v-else-if="error || !versions?.length">
-      <div class="flex flex-col items-center justify-center py-24">
-        <UIcon name="i-lucide-package-x" class="text-muted size-16" />
-        <h2 class="mt-4 text-xl font-semibold">{{ t("common.notFound") }}</h2>
-        <p class="text-muted mt-2">{{ packageName }}</p>
-        <UButton class="mt-4" :label="t('common.back')" variant="outline" to="/" />
-      </div>
+      <UEmpty
+        icon="i-lucide-package-x"
+        :title="t('common.notFound')"
+        :description="packageName"
+        :actions="[{ label: t('common.back'), variant: 'outline', to: '/' }]"
+      />
     </template>
 
     <!-- Package detail -->

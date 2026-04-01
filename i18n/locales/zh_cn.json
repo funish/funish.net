@@ -13,9 +13,7 @@
     "noResults": "未找到包",
     "searchFor": "搜索 \"{query}\"",
     "suggestion": {
-      "orgExists": "查看 {'@'}{org} 的所有包",
-      "userHint": "按维护者搜索: {user}",
-      "orgHint": "按 scope 搜索: {'@'}{org}"
+      "orgExists": "查看 {'@'}{org} 的所有包"
     },
     "sort": {
       "bestMatch": "最佳匹配",
@@ -32,8 +30,6 @@
     }
   },
   "package": {
-    "install": "安装",
-    "copy": "复制",
     "copied": "已复制！",
     "copyReadme": "复制 README",
     "homepage": "主页",
@@ -46,23 +42,15 @@
     "lastPublish": "最后发布",
     "downloads": "下载量",
     "monthly": "每月",
-    "weekly": "每周",
-    "versions": "版本",
     "dependencies": "依赖",
     "peerDependencies": "Peer 依赖",
     "devDependencies": "开发依赖",
-    "files": "文件",
-    "readme": "说明文档",
-    "description": "描述",
-    "installers": "安装器",
     "noReadme": "暂无说明文档",
     "noDependencies": "无依赖",
-    "published": "发布于 {time}",
     "version": "版本",
     "size": "大小",
     "files_count": "文件数",
     "current": "当前",
-    "distTags": "发布标签",
     "tab": {
       "readme": "说明文档",
       "versions": "版本",
@@ -71,15 +59,18 @@
       "description": "描述",
       "installers": "安装器"
     },
-    "filesTree": "文件",
-    "filePreview": "预览",
     "binaryFile": "二进制文件，无法显示",
     "fetchFileError": "加载文件内容失败",
     "selectFile": "选择一个文件以预览",
     "tags": "标签",
     "releaseNotes": "发布说明",
     "documentation": "文档",
-    "installationNotes": "安装说明"
+    "installationNotes": "安装说明",
+    "locale": "区域",
+    "channel": "通道",
+    "support": "技术支持",
+    "privacy": "隐私政策",
+    "purchase": "购买"
   },
   "user": {
     "packages": "包",
@@ -96,31 +87,28 @@
   "explore": {
     "title": "探索",
     "npm": "热门 NPM 包",
-    "winget": "精选 Winget 包"
+    "winget": "精选 Winget 包",
+    "noPackages": "未找到包"
   },
   "home": {
     "title": "发现包",
     "subtitle": "在一个地方搜索 NPM 和 Winget 注册表。",
-    "searchPlaceholder": "搜索包...",
-    "search": "搜索包",
-    "sources": {
-      "headline": "包源",
-      "title": "搜索多个注册表",
-      "npm": "探索 NPM 注册表中的超过 200 万个包。",
-      "winget": "发现 Winget 社区的 Windows 应用程序。"
-    },
-    "cta": {
-      "title": "准备探索了吗？",
-      "description": "浏览热门包或搜索你需要的任何内容。",
-      "explore": "探索包"
-    }
+    "searchPlaceholder": "搜索包..."
+  },
+  "time": {
+    "justNow": "刚刚",
+    "minutesAgo": "{n} 分钟前",
+    "hoursAgo": "{n} 小时前",
+    "daysAgo": "{n} 天前",
+    "monthsAgo": "{n} 个月前",
+    "yearsAgo": "{n} 年前"
   },
   "common": {
     "loading": "加载中...",
     "error": "发生错误",
     "notFound": "未找到",
     "back": "返回",
-    "showMore": "显示更多",
-    "page": "第 {current} 页，共 {total} 页"
+    "perMonth": "/月",
+    "na": "无"
   }
 }

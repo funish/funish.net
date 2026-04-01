@@ -125,7 +125,7 @@ async function copyReadme() {
       </span>
       <span v-if="lastPublish">
         {{ t("package.lastPublish") }}:
-        <span class="text-default">{{ formatRelativeTime(lastPublish) }}</span>
+        <span class="text-default">{{ formatRelativeTime(lastPublish, t) }}</span>
       </span>
       <span v-if="downloads">
         {{ t("package.downloads") }}:

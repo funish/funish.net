@@ -6,7 +6,7 @@ const { search } = useSearch();
 
 const { data: npmTrending, pending: npmPending } = await useAsyncData(
   "explore-npm",
-  () => search({ query: "popularity:>0.5", source: "npm", size: 30, sort: "popularity" }),
+  () => search({ query: "popularity:>1", source: "npm", size: 30, sort: "popularity" }),
   {
     lazy: true,
     getCachedData(key, nuxtApp) {
@@ -98,7 +98,7 @@ useSeoMeta({
       <NpmGrid
         :packages="npmTrending?.results ?? []"
         :loading="npmPending"
-        :empty-text="t('org.noPackages')"
+        :empty-text="t('explore.noPackages')"
         :max-keywords="5"
       />
     </section>
@@ -113,7 +113,7 @@ useSeoMeta({
       <NpmGrid
         :packages="wingetPopular?.results ?? []"
         :loading="wingetPending"
-        :empty-text="t('org.noPackages')"
+        :empty-text="t('explore.noPackages')"
         :max-keywords="5"
       />
     </section>

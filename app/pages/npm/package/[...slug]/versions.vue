@@ -96,7 +96,7 @@ const pagination = ref({
         </div>
       </template>
       <template #date-cell="{ row }">
-        <span class="text-muted">{{ formatRelativeTime(row.original.date) }}</span>
+        <span class="text-muted">{{ formatRelativeTime(row.original.date, t) }}</span>
       </template>
     </UTable>
 
