@@ -79,11 +79,12 @@ export function useNpm() {
   }
 
   /**
-   * Get the authoritative list of packages for an npm org/scope
+   * Get the list of packages for an npm org/scope via nexus CDN
    * Returns a map of package name → latest version
    */
   async function getOrgPackages(org: string): Promise<Record<string, string>> {
-    return $fetch<Record<string, string>>(`${REGISTRY}/-/org/${org}/package`);
+    const data = await $fetch<{ packages: string[] }>(`https://nexus.funish.net/cdn/npm/@${org}`);
+    return Object.fromEntries(data.packages.map((name) => [name, "latest"]));
   }
 
   /**
@@ -92,8 +93,8 @@ export function useNpm() {
    */
   async function checkOrgExists(org: string): Promise<number> {
     try {
-      const pkgs = await getOrgPackages(org);
-      return Object.keys(pkgs).length;
+      const data = await $fetch<{ packages: string[] }>(`https://nexus.funish.net/cdn/npm/@${org}`);
+      return data.packages.length;
     } catch {
       return 0;
     }

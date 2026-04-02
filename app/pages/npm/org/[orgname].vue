@@ -4,12 +4,19 @@ import type { NpmPackage } from "~/types/npm";
 
 const route = useRoute();
 const { t } = useI18n();
-const { getOrgPackages, getPackage } = useNpm();
+const { getPackage } = useNpm();
 
 const orgname = route.params.orgname as string;
 
 if (!orgname) {
   throw createError({ statusCode: 404, message: t("common.notFound") });
+}
+
+const NEXUS_CDN = "https://nexus.funish.net/cdn/npm";
+
+interface OrgResponse {
+  name: string;
+  packages: string[];
 }
 
 const pageSize = 30;
@@ -22,7 +29,10 @@ const {
   error: namesError,
 } = await useAsyncData(
   `npm-org-names-${orgname}`,
-  () => getOrgPackages(orgname).then((map) => Object.keys(map).reverse()),
+  async () => {
+    const data = await $fetch<OrgResponse>(`${NEXUS_CDN}/@${orgname}`);
+    return data.packages;
+  },
   { watch: [() => route.params.orgname], lazy: true },
 );
 
