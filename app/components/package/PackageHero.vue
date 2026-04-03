@@ -22,6 +22,14 @@ const props = defineProps<{
 
 const { t } = useI18n();
 
+// Parse scoped npm package name (e.g. "@vue/core" -> { scope: "vue", rest: "core" })
+const scopeInfo = computed(() => {
+  if (props.source !== "npm" || !props.name.startsWith("@")) return null;
+  const slashIndex = props.name.indexOf("/");
+  if (slashIndex === -1) return null;
+  return { scope: props.name.slice(1, slashIndex), rest: props.name.slice(slashIndex + 1) };
+});
+
 const { copy, copied } = useClipboard();
 const readmeLoading = ref(false);
 
@@ -45,7 +53,14 @@ async function copyReadme() {
     <!-- Name + tags + links -->
     <div class="flex flex-wrap items-start justify-between gap-4">
       <div class="flex flex-wrap items-center gap-2">
-        <h1 class="font-mono text-2xl font-bold">{{ name }}</h1>
+        <h1 class="font-mono text-2xl font-bold">
+          <template v-if="scopeInfo">
+            <NuxtLink :to="`/npm/org/${scopeInfo.scope}`" class="hover:text-primary hover:underline"
+              >@{{ scopeInfo.scope }}/</NuxtLink
+            >{{ scopeInfo.rest }}
+          </template>
+          <template v-else>{{ name }}</template>
+        </h1>
         <UBadge v-if="distTags?.latest" :label="`v${version}`" variant="subtle" color="primary" />
         <UBadge
           v-for="tag in Object.keys(distTags || {}).filter((t) => t !== 'latest')"

@@ -1,3 +1,5 @@
+import type { FetchError } from "ofetch";
+
 import type {
   WingetApiResponse,
   WingetInstallerData,
@@ -28,10 +30,22 @@ export function useWinget() {
         MatchType: matchType,
       },
     };
-    return $fetch<WingetSearchResponse>(`${API}/manifestSearch`, {
-      method: "POST",
-      body,
-    });
+    try {
+      const data = await $fetch<WingetSearchResponse>(`${API}/manifestSearch`, {
+        method: "POST",
+        body,
+      });
+      // ofetch may return null for 204 empty body
+      return data ?? { Data: [] };
+    } catch (err: unknown) {
+      // WinGet REST API returns 204 No Content when no results found;
+      // ofetch may throw a JSON parse error for the empty response body.
+      const fetchError = err as FetchError;
+      if (fetchError?.response?.status === 204) {
+        return { Data: [] };
+      }
+      throw err;
+    }
   }
 
   /**
