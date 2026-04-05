@@ -53,7 +53,7 @@ const authorUrl = computed(() => {
 });
 
 useSeoMeta({
-  title: () => (pkg.value ? `${pkg.value.name} - Funish` : packageName),
+  title: () => pkg.value?.name ?? packageName,
   description: () => pkg.value?.description ?? "",
 });
 

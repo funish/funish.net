@@ -50,10 +50,7 @@ const { data: locale } = await useAsyncData<WingetLocaleData | undefined>(
 );
 
 useSeoMeta({
-  title: () =>
-    locale.value
-      ? `${locale.value.PackageName ?? packageName} - Funish`
-      : `${packageName} - Funish`,
+  title: () => locale.value?.PackageName ?? packageName,
   description: () => locale.value?.ShortDescription ?? "",
 });
 

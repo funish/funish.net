@@ -94,6 +94,8 @@ async function doSearch() {
   loading.value = true;
   error.value = null;
 
+  checkOrg(q);
+
   try {
     const data = await search({
       query: searchText.value,
@@ -112,8 +114,6 @@ async function doSearch() {
   } finally {
     loading.value = false;
   }
-
-  checkOrg(query.value.trim());
 }
 
 function buildQueryParams(): Record<string, string> {
@@ -186,8 +186,7 @@ useSeoMeta({
       >
         <UIcon name="i-lucide-building-2" class="text-primary size-5" />
         <div class="flex-1">
-          <span class="font-medium">@{{ orgSuggestion.name }}</span>
-          <span class="text-muted ml-2 text-sm">
+          <span class="text-muted text-sm">
             {{ t("search.suggestion.orgExists", { org: orgSuggestion.name }) }}
           </span>
         </div>

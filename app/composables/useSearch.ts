@@ -70,9 +70,9 @@ export function useSearch() {
       license: obj.package.license,
       lastPublish: obj.package.date,
       keywords: obj.package.keywords,
-      author: obj.package.publisher?.username,
-      authorUrl: obj.package.publisher?.username
-        ? `/npm/user/${obj.package.publisher.username}`
+      author: obj.package.publisher?.actor?.name ?? obj.package.publisher?.username,
+      authorUrl: obj.package.publisher?.actor?.name
+        ? `/npm/user/${obj.package.publisher.actor.name}`
         : undefined,
       quality: obj.score?.detail?.quality,
       popularity: obj.score?.detail?.popularity,

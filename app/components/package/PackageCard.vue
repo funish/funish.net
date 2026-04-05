@@ -45,14 +45,7 @@ const { t } = useI18n();
 
     <!-- Bottom meta -->
     <div class="text-muted mt-2 flex flex-wrap items-center gap-x-1.5 text-xs">
-      <span
-        v-if="item.authorUrl"
-        class="hover:text-default cursor-pointer hover:underline"
-        @click.stop="navigateTo(item.authorUrl!, { external: true })"
-      >
-        {{ item.author }}
-      </span>
-      <span v-else-if="item.author">{{ item.author }}</span>
+      <span v-if="item.author">{{ item.author }}</span>
       <span v-else-if="item.publisher">{{ item.publisher }}</span>
 
       <template v-if="item.author || item.authorUrl || item.publisher">

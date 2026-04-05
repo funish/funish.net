@@ -27,6 +27,7 @@ export interface NpmSearchPackage {
   };
   author: { name: string; email?: string; url?: string } | null;
   publisher: {
+    actor?: { name: string; type: string; email?: string };
     username: string;
     email: string;
   };
