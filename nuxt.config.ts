@@ -10,7 +10,7 @@ export default defineNuxtConfig({
   },
 
   experimental: {
-    payloadExtraction: true,
+    payloadExtraction: "client",
   },
 
   compatibilityDate: "2026-03-28",
@@ -18,9 +18,6 @@ export default defineNuxtConfig({
   nitro: {
     future: {
       nativeSWR: true,
-    },
-    experimental: {
-      wasm: true,
     },
   },
 
@@ -36,20 +33,11 @@ export default defineNuxtConfig({
         "@vue/devtools-kit",
         "@tanstack/vue-table",
         "shiki",
-        "@shikijs/core",
-        "@shikijs/engine-javascript",
-        "@shikijs/engine-oniguruma",
-        "@shikijs/langs/*",
-        "@shikijs/themes/material-theme-lighter",
-        "@shikijs/themes/material-theme-palenight",
-        "@shikijs/themes/material-theme",
-        "@shikijs/transformers",
-        "shiki/wasm",
       ],
     },
   },
 
-  modules: ["@nuxt/ui", "@vueuse/nuxt", "@nuxtjs/i18n"],
+  modules: ["@nuxt/ui", "@nuxtjs/mdc", "@nuxtjs/i18n", "@vueuse/nuxt"],
 
   css: ["~/assets/css/main.css"],
 
@@ -84,6 +72,7 @@ export default defineNuxtConfig({
 
   mdc: {
     highlight: {
+      shikiEngine: "javascript",
       langs: bundledLanguagesInfo.map((lang) => lang.id as BundledLanguage),
     },
   },

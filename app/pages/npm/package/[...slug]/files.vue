@@ -106,6 +106,14 @@ const treeItems = computed(() => {
   return toTreeItems(fileList.value.files);
 });
 
+const codeIconOverrides: Record<string, string> = {
+  cts: "i-vscode-icons-file-type-typescript",
+  mts: "i-vscode-icons-file-type-typescript",
+  env: "i-vscode-icons-file-dotenv",
+  license: "i-vscode-icons-file-type-license",
+  makefile: "i-vscode-icons-file-type-makefile",
+};
+
 const isBinaryFile = computed(() => {
   return selectedPath.value ? !isCodeFile(selectedPath.value) : false;
 });
@@ -141,6 +149,7 @@ const mdcContent = computed(() => {
             <ProseCodeIcon
               v-if="!item.children?.length"
               :filename="item.label"
+              :icon="item.label && codeIconOverrides[item.label.split('.').pop()!.toLowerCase()]"
               class="size-4 shrink-0"
             />
           </template>
