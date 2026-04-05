@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { TreeItem } from "@nuxt/ui";
+import { bundledLanguages } from "shiki";
 
 import type { JsdelivrFileNode, JsdelivrFileList, NpmPackage, NpmPackageFull } from "~/types/npm";
 
@@ -22,33 +23,26 @@ const fileContent = ref<string | null>(null);
 const fileLoading = ref(false);
 const fileError = ref(false);
 
-const binaryExtensions = new Set([
-  ".png",
-  ".jpg",
-  ".jpeg",
-  ".gif",
-  ".bmp",
-  ".ico",
-  ".svg",
-  ".webp",
-  ".woff",
-  ".woff2",
-  ".ttf",
-  ".eot",
-  ".otf",
-  ".zip",
-  ".tar",
-  ".gz",
-  ".rar",
-  ".7z",
-  ".exe",
-  ".dll",
-  ".so",
-  ".dylib",
-  ".wasm",
-  ".bin",
-  ".dat",
+const textFileWhitelist = new Set([
+  ".env",
+  ".gitignore",
+  ".editorconfig",
+  ".npmrc",
+  ".nvmrc",
+  ".dockerignore",
+  "license",
+  "changelog",
+  "notice",
+  "authors",
+  "makefile",
 ]);
+
+function isCodeFile(path: string): boolean {
+  const filename = path.includes("/") ? path.split("/").pop()! : path;
+  if (textFileWhitelist.has(filename.toLowerCase())) return true;
+  const ext = path.includes(".") ? path.split(".").pop()! : "";
+  return !!ext && ext in bundledLanguages;
+}
 
 function toTreeItems(nodes: JsdelivrFileNode[], parentPath = ""): TreeItem[] {
   return nodes
@@ -79,8 +73,7 @@ function toTreeItems(nodes: JsdelivrFileNode[], parentPath = ""): TreeItem[] {
 }
 
 async function loadFileContent(path: string) {
-  const ext = path.includes(".") ? `.${path.split(".").pop()!}` : "";
-  if (binaryExtensions.has(ext)) {
+  if (!isCodeFile(path)) {
     fileContent.value = null;
     fileError.value = false;
     return;
@@ -114,9 +107,15 @@ const treeItems = computed(() => {
 });
 
 const isBinaryFile = computed(() => {
-  if (!selectedPath.value) return false;
-  const ext = selectedPath.value.includes(".") ? `.${selectedPath.value.split(".").pop()!}` : "";
-  return binaryExtensions.has(ext);
+  return selectedPath.value ? !isCodeFile(selectedPath.value) : false;
+});
+
+const mdcContent = computed(() => {
+  if (!fileContent.value || !selectedPath.value) return "";
+  const ext = selectedPath.value.includes(".") ? selectedPath.value.split(".").pop()! : "text";
+  const filename = selectedPath.value.split("/").pop()!;
+  const fence = fileContent.value.includes("```") ? "````" : "```";
+  return `${fence}${ext} [${filename}]\n${fileContent.value}\n${fence}`;
 });
 </script>
 
@@ -172,17 +171,12 @@ const isBinaryFile = computed(() => {
         </template>
 
         <template v-else-if="fileContent !== null">
-          <ProsePre
-            :filename="selectedPath ?? ''"
-            :language="selectedPath?.includes('.') ? selectedPath.split('.').pop() : undefined"
-            :code="fileContent"
-            :ui="{
-              header: 'rounded-none',
-              base: 'rounded-none',
-            }"
-          >
-            {{ fileContent }}
-          </ProsePre>
+          <MDC
+            :key="selectedPath ?? ''"
+            :value="mdcContent"
+            tag="div"
+            class="[&>div]:my-0! [&>div]:rounded-none! [&>div]:border-0!"
+          />
         </template>
 
         <template v-else>

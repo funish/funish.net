@@ -1,4 +1,6 @@
 import { defineNuxtConfig } from "nuxt/config";
+import type { BundledLanguage } from "shiki";
+import { bundledLanguagesInfo } from "shiki/bundle/full";
 
 export default defineNuxtConfig({
   ssr: false,
@@ -17,6 +19,9 @@ export default defineNuxtConfig({
     future: {
       nativeSWR: true,
     },
+    experimental: {
+      wasm: true,
+    },
   },
 
   routeRules: {
@@ -25,7 +30,22 @@ export default defineNuxtConfig({
 
   vite: {
     optimizeDeps: {
-      include: ["@vue/devtools-core", "@vue/devtools-kit", "@tanstack/vue-table"],
+      include: [
+        "@nuxt/ui/locale",
+        "@vue/devtools-core",
+        "@vue/devtools-kit",
+        "@tanstack/vue-table",
+        "shiki",
+        "@shikijs/core",
+        "@shikijs/engine-javascript",
+        "@shikijs/engine-oniguruma",
+        "@shikijs/langs/*",
+        "@shikijs/themes/material-theme-lighter",
+        "@shikijs/themes/material-theme-palenight",
+        "@shikijs/themes/material-theme",
+        "@shikijs/transformers",
+        "shiki/wasm",
+      ],
     },
   },
 
@@ -60,8 +80,11 @@ export default defineNuxtConfig({
 
   ui: {
     mdc: true,
-    experimental: {
-      componentDetection: true,
+  },
+
+  mdc: {
+    highlight: {
+      langs: bundledLanguagesInfo.map((lang) => lang.id as BundledLanguage),
     },
   },
 });
